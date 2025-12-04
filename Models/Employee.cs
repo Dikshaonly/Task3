@@ -18,8 +18,8 @@ public partial class Employee
     public int? Did { get; set; }
 
     public string? Gender { get; set; }
-    public string? depName{get;set;}
-    public string? desName{get;set;}
+    public string? DepName{get;set;}
+    public string? DesName{get;set;}
 
     public virtual Department? Dep { get; set; }
 
