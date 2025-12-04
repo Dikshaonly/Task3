@@ -34,24 +34,31 @@ namespace dapper.Controllers
         public IActionResult Edit(int id){
             conn.Open();
             string sql = @"SELECT 
-            Eid,Name,Email,Phone,Gender,DepName AS DepName,DName AS DesName 
+            e.Eid,e.Name,e.Email,e.Phone,
+            e.Gender,e.DepId,e.Did,
+            d.DepName AS DepName,
+            d2.DName AS DesName 
             FROM Employee e 
             INNER JOIN Department d ON e.DepID = d.DepId
              INNER JOIN Designation d2 ON e.Did = d2.Did 
              WHERE Eid = @id ";
              var employees = conn.QuerySingleOrDefault<Employee>(sql,new{id = id});
+             var departments = conn.Query<Department>("SELECT * FROM Department").ToList();
+             var designations = conn.Query<Designation>("SELECT * FROM Designation").ToList();
+             ViewBag.Departments = new SelectList(departments, "DepId", "DepName", employees.DepId);
+             ViewBag.Designations = new SelectList(designations, "Did", "DName", employees.Did);
              return View(employees);
             conn.Close();
         }
         //[POST]
-        [HttpPost]
+        /*[HttpPost]
         public IActionResult Edit(Employee employee,int id){
             conn.Open();
             string sql = @"UPDATE employee SET
              Name = @Name,Email = @Email,Phone = @Phone,Gender = @Gender,
              DepName = @DepName,
              ";
-        }
+        }*/
        
     }
 }
