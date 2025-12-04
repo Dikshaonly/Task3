@@ -1,0 +1,86 @@
+@using Task3.Models
+@model Task3.Models.Employee
+@{
+    ViewData["Title"] = "Employee Details"; 
+}
+<h2>Employee Details:</h2>
+<div>
+<h4>Employee</h4>
+<hr>
+<dl class="row">
+<dt class="col-sm-2">Name</dt>
+<dd class="col-sm-10">@Model.Name</dd>
+<dt class="col-sm-2">Email</dt>
+<dd class="col-sm-10">@Model.Email</dd>
+<dt class="col-sm-2">Phone</dt>
+<dd class="col-sm-10">@Model.Phone</dd>
+<dt class="col-sm-2">Gender</dt>
+<dd class="col-sm-10">@Model.Gender</dd>
+<dt class="col-sm-2">Department</dt>
+<dd class="col-sm-10">@Model.DepName</dd>
+<dt class="col-sm-2">Designation</dt>
+<dd class="col-sm-10">@Model.DesName</dd>
+</dl>
+
+<!--Relatives Section-->
+<!--
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+</style>
+<h2 class="text-center">Relative's Data:</h2>
+
+ <a asp-controller="Relative" asp-action="Create"  asp-route-id = "@Model.Eid"  class="text-decoration-none text-center btn btn-primary w-100 p-2">Add Relative</a>
+
+@if(Model.Relatives!=null && Model.Relatives.Any()){
+    <table class="table">
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Email</th>
+<th>Phone</th>
+<th>Gender</th>
+<th>Relationship</th>
+<th colspan="2">Actions</th>
+</tr>
+@foreach(var item in Model.Relatives){
+    <tr>
+    <td>@item.Rid</td>
+    <td>@item.Name</td>
+    <td>@item.Email</td>
+  <td>@item.Phone</td>
+  <td>@item.Gender</td>
+    <td>@item.Relation</td>
+  <td><a asp-controller="Relative" asp-action="Edit" asp-route-id="@item.Rid" class="text-decoration-none btn btn-primary">Edit</a></td>
+  <td><button class = "btn btn-danger"
+  data-bs-toggle="modal"
+  data-bs-target="#deleteModal"
+  data-url="@Url.Action("Delete", "Relative", new{id=item.Rid})">
+  Delete</button></td>
+</tr>
+}
+</table>
+
+
+@await Html.PartialAsync("_Popup")
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var modal = document.getElementById("deleteModal");
+
+        modal.addEventListener("show.bs.modal", function (event) {
+            var button = event.relatedTarget;
+            var url = button.getAttribute("data-url");
+
+            var confirmBtn = document.getElementById("confirmDeleteBtn");
+            confirmBtn.href = url;
+        });
+    });
+</script>
+}
+else{
+     <p class="text-muted">No relatives added yet.</p>
+}
+-->
+<a asp-controller = "Employee" asp-action = "Index" class="text-decoration-none btn btn-secondary w-100 p-2">Back to Employee</a>
