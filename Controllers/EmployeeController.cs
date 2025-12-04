@@ -120,6 +120,15 @@ namespace dapper.Controllers
              return RedirectToAction("Index");
         }
         }
+
+        public IActionResult Delete(int id){
+            using (var conn = new SqlConnection(connstr)){
+                conn.Open();
+                string sql = "DELETE FROM Employee WHERE Eid = @id";
+                var employees = conn.Execute(sql,new{id=id});
+                return RedirectToAction("Index");
+            }
+        }
        
     }
 }
