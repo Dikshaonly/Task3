@@ -1,0 +1,41 @@
+@using Task3.Models
+@model Task3.Models.Employee
+@{
+    ViewData["Title"] = "Edit Employee"; 
+}
+<h2>Edit Employee:</h2>
+<form asp-action="Edit" asp-controller="Employee" method="post">
+<input type="hidden" asp-for = "Eid">
+<div class="mb-3">
+<label asp-for = "Name" class = "form-label"></label>
+<input asp-for = "Name" class="form-control" />
+</div>
+<div class="mb-3">
+<label asp-for = "Email" class = "form-label"></label>
+<input asp-for = "Email" class="form-control" />
+</div>
+<div class="mb-3">
+<label asp-for = "Phone" class = "form-label"></label>
+<input asp-for = "Phone" class="form-control" />
+</div>
+<div class="mb-3">
+<label  class="form-label">Gender</label><br>
+<input  type = "radio" Value = "Male" asp-for="Gender" />Male
+<input  type = "radio" Value = "Female" asp-for="Gender"/>Female
+<input  type = "radio" Value = "Others" asp-for="Gender" />Others
+</div>
+<div class="mb-3">
+<label asp-for = "DepId" class = "form-label">Department</label>
+ <select asp-for="DepId" class="form-control" asp-items="ViewBag.Departments">
+            <option value="">-- Select Department --</option>
+        </select>
+</div>
+<div class="mb-3">
+<label asp-for = "Did" class = "form-label">Designation</label>
+ <select asp-for="Did" class="form-control" asp-items="ViewBag.Designations">
+            <option value="">-- Select Designation --</option>
+        </select>
+</div>
+<input type="submit" Value="Update Employee" class="btn btn-primary w-100 p-2">
+</form>
+<a  asp-controller="Employee" asp-action="Index" class="text-decoration-none text-center btn btn-secondary w-100 p-2 mt-3">Back</a>
