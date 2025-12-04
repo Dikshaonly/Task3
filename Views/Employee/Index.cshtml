@@ -27,8 +27,8 @@ table, th, td {
     <td>@item.Email</td>
   <td>@item.Phone</td>
   <td>@item.Gender</td>
-    <td>@item.Dep?.DepName</td>
-    <td>@item.DidNavigation?.Dname</td>
+    <td>@item.DepName</td>
+    <td>@item.DesName</td>
   <td><a asp-controller="Employee" asp-action="Edit" asp-route-id="@item.Eid" class="text-decoration-none btn btn-primary">Edit</a></td>
    <td><a asp-controller = "Employee" asp-action = "Details" asp-route-id = "@item.Eid" class = "text-decoration-none btn btn-primary">Details</a></td>
   <td><button class = "btn btn-danger"
