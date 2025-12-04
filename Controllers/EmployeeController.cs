@@ -29,6 +29,46 @@ namespace dapper.Controllers
             return View(employees);
             }
         }
+
+        public IActionResult Create(){
+            using(var conn = new SqlConnection(connstr)){
+            conn.Open();
+            var departments = conn.Query<Department>("SELECT DepId,DepName FROM Department").ToList();
+             var designations = conn.Query<Designation>("SELECT Did, DName FROM Designation").ToList();
+            ViewBag.Departments = new SelectList(departments, "DepId", "DepName" );
+            ViewBag.Designations = new SelectList(designations, "Did", "Dname");
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(Employee emp){
+            if (!ModelState.IsValid)
+            {
+             using(var conn = new SqlConnection(connstr)){
+            conn.Open();
+            var departments = conn.Query<Department>("SELECT DepId,DepName FROM Department").ToList();
+             var designations = conn.Query<Designation>("SELECT Did, DName FROM Designation").ToList();
+            ViewBag.Departments = new SelectList(departments, "DepId", "DepName", emp.DepId);
+            ViewBag.Designations = new SelectList(designations, "Did", "Dname", emp.Did);
+            }
+            }
+
+            using(var conn = new SqlConnection(connstr)){
+                conn.Open();
+                string sql = @"INSERT INTO Employee 
+                (Name,Email,Phone,Gender,DepId,Did) 
+                VALUES(@Name,@Email,@Phone,@Gender,@DepId,@Did)";
+                var employees = conn.Execute(sql,new{@Name = emp.Name, 
+                @Email = emp.Email,
+                @Phone = emp.Phone,@Gender=emp.Gender,
+                 @DepId=emp.DepId,@Did = emp.@Did });
+                return RedirectToAction("Index");
+            }
+            return View(emp);
+            
+        }
+
         //[GET]
         public IActionResult Edit(int id){
             using (var conn = new SqlConnection(connstr)){
