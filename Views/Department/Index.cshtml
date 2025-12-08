@@ -1,0 +1,68 @@
+@using Task3.Models
+@{
+    ViewData["Title"] = "Department";
+}
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+</style>
+<h2 class="text-center">Department's Data:</h2>
+
+<!--Error Message-->
+<!--@if(TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Error!</strong> @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+ //Success Message 
+@if(TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Success!</strong> @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}-->
+<table class="table">
+<tr>
+<th>Id</th>
+<th>Deptartment</th>
+<th colspan="2">Actions</th>
+</tr>
+@foreach(var item in Model){
+    <tr>
+    <td>@item.DepId</td>
+    <td>@item.DepName</td>
+  <td><a asp-controller="Department" asp-action="Edit" asp-route-id="@item.DepId" class="text-decoration-none btn btn-primary">Edit</a></td>
+  <td><button class="btn btn-danger"
+        data-bs-toggle="modal"
+        data-bs-target="#deleteModal"
+        data-url="@Url.Action("Delete", "Department", new { id = item.DepId })">
+    Delete
+</button>
+</td>
+</tr>
+}
+</table>
+  <a asp-controller="Department" asp-action="Create" class="text-decoration-none text-center btn btn-primary w-100 p-2">Add Department</a>
+  <a asp-controller="Employee" asp-action="Index" class="text-decoration-none btn btn-secondary w-100 p-2">View Employee</a>
+
+
+@await Html.PartialAsync("_Popup")
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var modal = document.getElementById("deleteModal");
+
+        modal.addEventListener("show.bs.modal", function (event) {
+            var button = event.relatedTarget;
+            var url = button.getAttribute("data-url");
+
+            var confirmBtn = document.getElementById("confirmDeleteBtn");
+            confirmBtn.href = url;
+        });
+    });
+</script>

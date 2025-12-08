@@ -1,0 +1,13 @@
+@using Task3.Models
+@model Task3.Models.Department
+@{
+    ViewData["Title"] = "Add Department";
+}
+<form asp-action="Create" asp-controller="Department" method="post">
+<div class="mb-3">
+<label asp-for = "DepName" class = "form-label">Department Name</label>
+<input asp-for = "DepName" class="form-control" />
+</div>
+<input type="submit" Value="Add Department" class="btn btn-primary w-100 p-2">
+</form>
+<a asp-controller="Department" asp-action="Index" class="btn btn-secondary w-100 p-2 mt-3">Back</a>
